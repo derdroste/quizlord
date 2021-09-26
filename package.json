@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/derdroste/quizlord/issues"
   },
-  "homepage": "https://github.com/derdroste/quizlord#readme"
+  "homepage": "https://github.com/derdroste/quizlord#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
