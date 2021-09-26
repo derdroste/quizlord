@@ -1,11 +1,11 @@
-import express from 'express';
+import { WebSocketServer } from 'ws';
 
-const app = express();
-app.get('/', (_req, res) => {
-    res.send('Hello worlddd!');
-});
+const wss = new WebSocketServer({ port: 3000 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`);
+wss.on('connection', function connection(ws) {
+    ws.on('message', function incoming(message) {
+        console.log('received: %s', message);
+    });
+
+    ws.send('something');
 });
