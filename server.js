@@ -1,9 +1,4 @@
-const express = require('express')
-const app = express()
-const port = 3000
-
-app.get('/', (req, res) => {
-    res.send('David ist ein Hurensohn')
-})
-
-app.listen(port, () => console.log(`Server is running on port ${port}...`))
+"use strict";
+var message = 'Hello Typescript world!';
+console.log(message);
+//# sourceMappingURL=server.js.map
