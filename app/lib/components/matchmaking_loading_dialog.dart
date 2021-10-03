@@ -44,6 +44,15 @@ class _MatchmakingLoadingDialogState extends State<MatchmakingLoadingDialog>
       child: Column(
         mainAxisSize: MainAxisSize.min, // To make the card compact
         children: <Widget>[
+          const SizedBox(height: 16.0),
+          const Text(
+            'Looking for opponent...',
+            style: TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 16.0),
           Padding(
               padding: const EdgeInsets.all(16.0),
               child: CircularProgressIndicator(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_lord/question_screen.dart';
 
 import 'home_screen.dart';
 
@@ -13,10 +14,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'QuizLord',
+      routes: {
+        '/': (context) => HomeScreen(),
+        '/question': (context) => QuestionScreen(),
+      },
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(),
     );
   }
 }

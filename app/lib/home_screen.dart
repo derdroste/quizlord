@@ -4,6 +4,8 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:flutter/foundation.dart';
 import 'package:web_socket_channel/status.dart' as status;
 
+import 'model/question.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -58,21 +60,46 @@ class _MyHomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var list = [
+      'Ja okay',
+      "Ne eher nicht",
+      'Vielleicht mal schauen',
+      'Ohne dregg alda'
+    ];
+    var mockQuestion = Question(
+        question: 'Fragen an Iblali bekomme ich Antworten?',
+        answers: list,
+        rightAnswer: 3);
     return Scaffold(
       body: Center(
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ElevatedButton(
-                  onPressed: _startMatchmaking,
-                  child: const Text('Playbuddne'),
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12), // <-- Radius
-                    ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                onPressed: _startMatchmaking,
+                child: const Text('Playbuddne'),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(240, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12), // <-- Radius
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/question',
+                      arguments: mockQuestion);
+                },
+                child: const Text('Question'),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(240, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12), // <-- Radius
                   ),
                 ),
               ),
