@@ -18,16 +18,41 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var ws_1 = __importStar(require("ws"));
-var wss = new ws_1.WebSocketServer({ port: 3000 });
-wss.on('connection', function connection(ws) {
-    ws.on('message', function incoming(data, isBinary) {
-        wss.clients.forEach(function each(client) {
-            if (client !== ws && client.readyState === ws_1.default.OPEN) {
-                client.send(data, { binary: isBinary });
-            }
-        });
+var WebSocket = __importStar(require("ws"));
+var express_1 = __importDefault(require("express"));
+var http_1 = require("http");
+var player_1 = require("./wss/player");
+var room_1 = require("./wss/room");
+var app = (0, express_1.default)();
+var server = (0, http_1.createServer)(app);
+var wss = new WebSocket.Server({ server: server });
+var port = 3000;
+var playerQeue = new Array();
+var rooms = new Array();
+wss.on('connection', function (ws) {
+    ws.send('Searching for an opponent...');
+    ws.on('message', function (message) {
+        var data = JSON.parse(message);
+        switch (data.type) {
+            case 'onConnect':
+                var me_1 = new player_1.Player(data.message, ws);
+                playerQeue.push(me_1);
+                if (me_1.id !== playerQeue[0].id) {
+                    var players = [
+                        me_1,
+                        playerQeue[0]
+                    ];
+                    rooms.push(new room_1.Room(players));
+                    playerQeue = playerQeue.filter(function (player) { return player.id !== me_1.id || player.id !== playerQeue[0].id; });
+                }
+        }
     });
+});
+server.listen(port, function () {
+    console.log("Server listening on Port: " + port + "...");
 });
 //# sourceMappingURL=server.js.map
